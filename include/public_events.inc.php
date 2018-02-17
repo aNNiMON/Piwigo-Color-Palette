@@ -64,6 +64,10 @@ function color_palette_loc_end_picture()
   global $template, $conf;
 
   $curr = $template->get_template_vars('current');
+  if (!array_key_exists('selected_derivative', $curr))
+  {
+    return;
+  }
   $der = $curr['selected_derivative'];
   $imageId = $der->src_image->id;
   $colors = array();

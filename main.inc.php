@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Color Palette
-Version: 1.0.0
+Version: 1.0.1
 Description: Extracts color palette from images and adds an ability to search by color.
 Plugin URI: auto
 Author: aNNiMON
@@ -20,7 +20,7 @@ define('COLOR_PALETTE_TABLE',   $prefixeTable . 'color_palette');
 define('COLOR_PALETTE_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . COLOR_PALETTE_ID);
 define('COLOR_PALETTE_PUBLIC',  get_absolute_root_url() . make_index_url(array('section' => 'palette')) . '/');
 define('COLOR_PALETTE_DIR',     PHPWG_ROOT_PATH . PWG_LOCAL_DIR . COLOR_PALETTE_ID . '/');
-define('COLOR_PALETTE_VERSION', '1.0.0');
+define('COLOR_PALETTE_VERSION', '1.0.1');
 // Settings defaults
 define('COLOR_PALETTE_DEFAULT_COLORS', '8');
 define('COLOR_PALETTE_DEFAULT_SAMPLE_SIZE', '150');
