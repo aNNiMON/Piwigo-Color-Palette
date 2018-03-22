@@ -12,6 +12,8 @@ $lang['Sample image size for palette generation (default %d px)'] = 'Разме�
 $lang['Clear all palettes'] = 'Очистить все палитры';
 $lang['Clear color palette'] = 'Удалить цветовую палитру';
 $lang['Generate color palette'] = 'Сгенерировать цветовую палитру';
+$lang['With color palette'] = 'С цветовой палитрой';
+$lang['Without color palette'] = 'Без цветовой палитры';
 
 $lang['Unable to process %s'] = 'Невозможно обработать %s';
 $lang['Operation successfully completed'] = 'Операция завершена успешно';

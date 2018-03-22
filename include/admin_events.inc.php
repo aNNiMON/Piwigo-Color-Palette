@@ -63,3 +63,39 @@ SELECT `id`, `file`, `path`
     $page['infos'][] = l10n('Operation successfully completed');
   }
 }
+
+function color_palette_get_batch_manager_prefilters($prefilters)
+{
+  $prefilters[] = array(
+    'ID' => 'color_palette_with_palette',
+    'NAME' => l10n('With color palette'),
+    );
+  $prefilters[] = array(
+    'ID' => 'color_palette_without_palette',
+    'NAME' => l10n('Without color palette'),
+    );
+
+  return $prefilters;
+}
+
+function color_palette_perform_batch_manager_prefilters($filter_sets, $prefilter)
+{
+  switch ($prefilter)
+  {
+  case 'color_palette_with_palette':
+  case 'color_palette_without_palette':
+    $criteria = ($prefilter == 'color_palette_without_palette') ? 'IS NULL' : 'IS NOT NULL';
+    $query = '
+SELECT
+    DISTINCT('.IMAGES_TABLE.'.id)
+  FROM '.IMAGES_TABLE.'
+  LEFT JOIN '.COLOR_PALETTE_TABLE.'
+    ON '.IMAGES_TABLE.'.id = '.COLOR_PALETTE_TABLE.'.image_id
+  WHERE
+    '.COLOR_PALETTE_TABLE.'.image_id '.$criteria.'
+;';
+    $filter_sets[] = query2array($query, null, 'id');
+    break;
+  }
+  return $filter_sets;
+}

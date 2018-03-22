@@ -12,6 +12,8 @@ $lang['Sample image size for palette generation (default %d px)'] = 'Sample imag
 $lang['Clear all palettes'] = 'Clear all palettes';
 $lang['Clear color palette'] = 'Clear color palette';
 $lang['Generate color palette'] = 'Generate color palette';
+$lang['With color palette'] = 'With color palette';
+$lang['Without color palette'] = 'Without color palette';
 
 $lang['Unable to process %s'] = 'Unable to process %s';
 $lang['Operation successfully completed'] = 'Operation has been successfully completed';

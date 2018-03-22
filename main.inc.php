@@ -40,6 +40,11 @@ if (defined('IN_ADMIN'))
       EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
   add_event_handler('element_set_global_action', 'color_palette_element_set_global_action',
       EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+  // Prefilter hooks
+  add_event_handler('get_batch_manager_prefilters', 'color_palette_get_batch_manager_prefilters',
+      EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+  add_event_handler('perform_batch_manager_prefilters', 'color_palette_perform_batch_manager_prefilters',
+      EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
 }
 else
 {
