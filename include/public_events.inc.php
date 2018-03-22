@@ -52,7 +52,7 @@ SELECT image_id
     AND
     (color_b BETWEEN ' . ($colorB - $diff) . ' AND ' . ($colorB + $diff) . ')
 ;';
-    $page['items'] = array_from_query($query, 'image_id');
+    $page['items'] = query2array($query, null, 'image_id');
   }
 }
 
