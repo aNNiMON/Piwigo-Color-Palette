@@ -25,7 +25,8 @@ if (isset($_POST['submit']))
   {
     $conf['ColorPalette'] = array(
       'colors' => $colors,
-      'sample_size' => $sample_size
+      'sample_size' => $sample_size,
+      'generate_on_image_page' => isset($_POST['generate_on_image_page'])
       );
     if (isset($_POST['clear']))
     {

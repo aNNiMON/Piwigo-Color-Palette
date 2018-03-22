@@ -82,6 +82,10 @@ SELECT COUNT(id) AS nb_colors
   if ($nb_colors != $conf['ColorPalette']['colors'])
   {
     // generate new palette
+    if (!$conf['ColorPalette']['generate_on_image_page'])
+    {
+      return;
+    }
     $query = '
 SELECT `path`
   FROM '. IMAGES_TABLE .'

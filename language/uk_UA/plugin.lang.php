@@ -14,6 +14,8 @@ $lang['Clear color palette'] = 'Видалити колірну палітру';
 $lang['Generate color palette'] = 'Згенерувати колірну палітру';
 $lang['With color palette'] = 'З колірною палітрою';
 $lang['Without color palette'] = 'Без колірної палітри';
+$lang['Generate palette on image page'] = 'Генерувати палітру на сторінці зображення';
+$lang['If palette is not yet generated for the image, this will be done the first time the image is opened'] = 'Якщо для зображення ще не згенерована палітра, це буде зроблено при першому відкритті зображення';
 
 $lang['Unable to process %s'] = 'Неможливо обробити %s';
 $lang['Operation successfully completed'] = 'Операція завершена успішно';

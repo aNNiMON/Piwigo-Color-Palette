@@ -14,6 +14,8 @@ $lang['Clear color palette'] = 'Clear color palette';
 $lang['Generate color palette'] = 'Generate color palette';
 $lang['With color palette'] = 'With color palette';
 $lang['Without color palette'] = 'Without color palette';
+$lang['Generate palette on image page'] = 'Generate palette on image page';
+$lang['If palette is not yet generated for the image, this will be done the first time the image is opened'] = 'If palette is not yet generated for the image, this will be done the first time the image is opened';
 
 $lang['Unable to process %s'] = 'Unable to process %s';
 $lang['Operation successfully completed'] = 'Operation has been successfully completed';

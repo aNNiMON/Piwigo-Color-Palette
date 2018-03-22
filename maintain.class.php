@@ -6,6 +6,7 @@ class ColorPalette_maintain extends PluginMaintain
   private $default_conf = array(
     'colors' => 8,
     'sample_size' => 150,
+    'generate_on_image_page' => true
     );
 
   private $table;
@@ -29,6 +30,16 @@ class ColorPalette_maintain extends PluginMaintain
     else
     {
       $old_conf = safe_unserialize($conf['ColorPalette']);
+
+      // Add missing parameters to conf
+      foreach ($this->default_conf as $key => $value)
+      {
+        if (!array_key_exists($key, $old_conf))
+        {
+          $old_conf[$key] = $value;
+        }
+      }
+
       conf_update_param('ColorPalette', $old_conf, true);
     }
 

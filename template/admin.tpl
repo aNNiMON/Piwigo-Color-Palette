@@ -22,6 +22,13 @@
     </label>
   </li>
   <li>
+    <input type="checkbox" id="generate_on_image_page" name="generate_on_image_page"{if $ColorPalette.generate_on_image_page} checked="checked"{/if}>
+    <label for="generate_on_image_page">
+      <b>{'Generate palette on image page'|translate}</b>
+      <br/>{'If palette is not yet generated for the image, this will be done the first time the image is opened'|translate}
+    </label>
+  </li>
+  <li>
     <input type="checkbox" id="clear" name="clear">
     <label for="clear">
       <b>{'Clear all palettes'|translate}</b>
