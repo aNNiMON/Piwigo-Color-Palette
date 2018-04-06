@@ -8,16 +8,16 @@ if (isset($_POST['submit']))
   check_pwg_token();
   $old_conf = $conf;
   $colors = isset($_POST['colors']) ? (intval($_POST['colors'])) : $old_conf['colors'];
-  if (($colors < 1) || ($colors > 30))
+  if (($colors < 3) || ($colors > 16))
   {
-    $page['errors'][] = l10n('Number of colors must have a value between %d and %d', 1, 30);
+    $page['errors'][] = l10n('Number of colors must have a value between %d and %d', 3, 16);
     $colors = $old_conf['colors'];
   }
 
   $sample_size = isset($_POST['sample_size']) ? (intval($_POST['sample_size'])) : $old_conf['sample_size'];
-  if (($sample_size < 5) || ($sample_size > 400))
+  if (($sample_size < 50) || ($sample_size > 400))
   {
-    $page['errors'][] = l10n('Sample image must have a size between %d and %d', 5, 400);
+    $page['errors'][] = l10n('Sample image must have a size between %d and %d', 50, 400);
     $sample_size = $old_conf['sample_size'];
   }
 
