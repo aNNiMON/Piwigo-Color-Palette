@@ -67,7 +67,7 @@ $(document).ready(function() {
 <fieldset id="color_palette">
 <legend>{'Configuration'|translate}</legend>
 <ul>
-  <li class="colors" {if not $ColorPalette.colors}style="display:none;"{/if}>
+  <li {if not $ColorPalette.colors}style="display:none;"{/if}>
     <label>
       <b>{'Number of colors'|translate}</b><br/>
       <div id="colorpalette_colors">
@@ -77,7 +77,7 @@ $(document).ready(function() {
       <br/>{'Number of colors in palette (default %d)'|translate:COLOR_PALETTE_DEFAULT_COLORS}
     </label>
   </li>
-  <li class="sample_size" {if not $ColorPalette.sample_size}style="display:none;"{/if}>
+  <li {if not $ColorPalette.sample_size}style="display:none;"{/if}>
     <label>
       <b>{'Sample image size'|translate}</b><br/>
       <div id="colorpalette_sample_size">

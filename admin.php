@@ -3,6 +3,14 @@ defined('COLOR_PALETTE_PATH') or die('Hacking attempt!');
 
 global $template, $page, $conf;
 
+include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
+$page['tab'] = (isset($_GET['tab'])) ? $_GET['tab'] : $page['tab'] = 'config';
+
+$tabsheet = new tabsheet();
+$tabsheet->add('config', l10n('Configuration'), COLOR_PALETTE_ADMIN.'-config');
+$tabsheet->select($page['tab']);
+$tabsheet->assign();
+
 if (isset($_POST['submit']))
 {
   check_pwg_token();
