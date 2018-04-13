@@ -104,6 +104,7 @@ SELECT `path`
 SELECT color_r, color_g, color_b
   FROM '. COLOR_PALETTE_TABLE .'
   WHERE image_id = ' . $imageId . '
+  ORDER BY `id`
 ;';
     $result = pwg_query($query);
     while ($row = pwg_db_fetch_assoc($result))

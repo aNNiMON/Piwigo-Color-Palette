@@ -4,6 +4,27 @@ defined('COLOR_PALETTE_PATH') or die('Hacking attempt!');
 abstract class Palette
 {
   /**
+   * Palette with weights
+   * @const
+   */
+  private static $PALETTE_WEIGHTS = array(
+    0x760000 => 1.00, 0xcc0000 => 1.00, 0xff2222 => 1.05, 0xff7777 => 1.00, 0xffcccc => 1.00,
+    0x763b00 => 1.00, 0xcc6600 => 1.00, 0xff9022 => 1.00, 0xffbb77 => 1.05, 0xffe5cc => 1.00,
+    0x767600 => 1.00, 0xcbcc00 => 1.00, 0xfeff22 => 1.05, 0xfeff77 => 1.00, 0xffffcc => 1.00,
+    0x3b7600 => 1.00, 0x66cc00 => 1.00, 0x90ff22 => 1.00, 0xbbff77 => 1.05, 0xe5ffcc => 1.00,
+    0x007600 => 1.00, 0x00cc00 => 1.00, 0x22ff22 => 1.05, 0x77ff77 => 1.00, 0xccffcc => 1.00,
+    0x00763b => 1.00, 0x00cc66 => 1.00, 0x22ff90 => 1.00, 0x77ffbb => 1.05, 0xccffe5 => 1.00,
+    0x007676 => 1.00, 0x00cbcc => 1.00, 0x22feff => 1.05, 0x77feff => 1.00, 0xccffff => 1.00,
+    0x003b76 => 1.00, 0x0065cc => 1.00, 0x2290ff => 1.00, 0x77baff => 1.05, 0xcce5ff => 1.00,
+    0x000076 => 1.00, 0x0000cc => 1.00, 0x2222ff => 1.05, 0x7777ff => 1.00, 0xccccff => 1.00,
+    0x3b0076 => 1.00, 0x6500cc => 1.00, 0x9022ff => 1.00, 0xba77ff => 1.05, 0xe5ccff => 1.00,
+    0x760076 => 1.00, 0xcc00cb => 1.00, 0xff22fe => 1.05, 0xff77fe => 1.00, 0xffccff => 1.00,
+    0x76003b => 1.00, 0xcc0066 => 1.00, 0xff2290 => 1.00, 0xff77bb => 1.05, 0xffcce5 => 1.00,
+    0x000000 => 1.00, 0x2a2a2a => 0.80, 0x555555 => 0.80, 0x7f7f7f => 0.90, 0xaaaaaa => 0.80, 0xd4d4d4 => 0.80, 0xffffff => 1.00,
+    0x151515 => 0.05, 0x3f3f3f => 0.05, 0x6a6a6a => 0.05, 0x959595 => 0.05, 0xbfbfbf => 0.05, 0xeaeaa => 0.05
+  );
+
+  /**
    * Width of the image
    * @var int
    */
@@ -19,21 +40,7 @@ abstract class Palette
    * Color palette
    * @var array
    */
-  protected $palette = array(
-    0x760000, 0xcc0000, 0xff2222, 0xff7777, 0xffcccc,
-    0x763b00, 0xcc6600, 0xff9022, 0xffbb77, 0xffe5cc,
-    0x767600, 0xcbcc00, 0xfeff22, 0xfeff77, 0xffffcc,
-    0x3b7600, 0x66cc00, 0x90ff22, 0xbbff77, 0xe5ffcc,
-    0x007600, 0x00cc00, 0x22ff22, 0x77ff77, 0xccffcc,
-    0x00763b, 0x00cc66, 0x22ff90, 0x77ffbb, 0xccffe5,
-    0x007676, 0x00cbcc, 0x22feff, 0x77feff, 0xccffff,
-    0x003b76, 0x0065cc, 0x2290ff, 0x77baff, 0xcce5ff,
-    0x000076, 0x0000cc, 0x2222ff, 0x7777ff, 0xccccff,
-    0x3b0076, 0x6500cc, 0x9022ff, 0xba77ff, 0xe5ccff,
-    0x760076, 0xcc00cb, 0xff22fe, 0xff77fe, 0xffccff,
-    0x76003b, 0xcc0066, 0xff2290, 0xff77bb, 0xffcce5,
-    0x000000, 0x2a2a2a, 0x555555, 0x7f7f7f, 0xaaaaaa, 0xd4d4d4, 0xffffff
-    );
+  protected $palette;
 
   public function __construct($path)
   {
@@ -54,6 +61,7 @@ abstract class Palette
     $step = sqrt($this->height / ($picksCount / $this->width));
     $step = max(array(1, $step));
     // Reset number of color occurrences
+    $this->palette = array_keys(self::$PALETTE_WEIGHTS);
     $this->palette = array_fill_keys($this->palette, 0);
     // Scan
     for ($y = 0; $y < $this->height; $y += $step)
@@ -66,7 +74,7 @@ abstract class Palette
           continue;
         }
         $color = $this->getClosestColor($r, $g, $b);
-        $this->palette[$color]++;
+        $this->palette[$color] += self::$PALETTE_WEIGHTS[$color];
       }
     }
     arsort($this->palette);
