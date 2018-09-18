@@ -1,0 +1,1 @@
+Extraheert het kleurenpalet uit afbeeldingen en voegt een mogelijkheid toe om op kleur te zoeken.
