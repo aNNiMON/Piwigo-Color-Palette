@@ -1,0 +1,1 @@
+Extrahiert die Farbpalette aus Bildern und fugt die Fahigkeit hinzu nach Farbe zu suchen.
