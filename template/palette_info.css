@@ -1,0 +1,17 @@
+.color_palette_item {
+  height: 18px;
+  width: 22px;
+  cursor: pointer;
+  float: left;
+}
+
+#palette_search {
+  vertical-align: middle;
+}
+.color_palette_item.selected {
+  border-top: solid rgba(0,0,0,0.5) 4px;
+  border-bottom: solid rgba(255,255,255,0.5) 4px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
