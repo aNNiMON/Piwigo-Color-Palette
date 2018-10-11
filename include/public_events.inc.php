@@ -5,9 +5,16 @@ function color_palette_loc_end_section_init()
 {
   global $tokens, $page, $conf;
 
-  if ($tokens[0] == 'palette' && (count($tokens) > 1))
+  if ($tokens[0] != 'palette' || (count($tokens) <= 1))
   {
-    $colorTokens = explode(',', $tokens[1]);
+    return;
+  }
+
+  $colorPredicates = array();
+  $searchColorHtml = '';
+  foreach (explode('x', $tokens[1]) as $colorParameter)
+  {
+    $colorTokens = explode(',', $colorParameter);
     $colorR = 0;
     $colorG = 0;
     $colorB = 0;
@@ -24,36 +31,39 @@ function color_palette_loc_end_section_init()
         $diff = (int) ($colorTokens[1]);
         break;
       case 3: // R,G,B
+      default:
         $colorR = (int) ($colorTokens[0]);
         $colorG = (int) ($colorTokens[1]);
         $colorB = (int) ($colorTokens[2]);
         break;
       case 4: // R,G,B,diff
-      default:
         $colorR = (int) ($colorTokens[0]);
         $colorG = (int) ($colorTokens[1]);
         $colorB = (int) ($colorTokens[2]);
         $diff = (int) ($colorTokens[3]);
         break;
     }
-    $page['section'] = 'palette/' . $tokens[1];
-
-    $searchColorHtml = '<span style="display:inline-block;background-color: rgb('.$colorR.','.$colorG.','.$colorB.');width:8px;height:8px;margin:0 5px;"></span>';
-    $page['section_title'] = '<a href="'.get_absolute_root_url().'">'.l10n('Home').'</a>'.$conf['level_separator'].'<a href="'.COLOR_PALETTE_PUBLIC.'">'.l10n('Palette Search').'</a>' . $searchColorHtml;
-    $page['title'] = l10n('Palette Search');
-
-    $query = '
-SELECT image_id
-  FROM '. COLOR_PALETTE_TABLE .'
-  WHERE
-    (color_r BETWEEN ' . ($colorR - $diff) . ' AND ' . ($colorR + $diff) . ')
-    AND
-    (color_g BETWEEN ' . ($colorG - $diff) . ' AND ' . ($colorG + $diff) . ')
-    AND
-    (color_b BETWEEN ' . ($colorB - $diff) . ' AND ' . ($colorB + $diff) . ')
-;';
-    $page['items'] = query2array($query, null, 'image_id');
+    $colorPredicates[] = '(' .
+        '(color_r BETWEEN ' . ($colorR - $diff) . ' AND ' . ($colorR + $diff) . ')' .
+        ' AND ' .
+        '(color_g BETWEEN ' . ($colorG - $diff) . ' AND ' . ($colorG + $diff) . ')' .
+        ' AND ' .
+        '(color_b BETWEEN ' . ($colorB - $diff) . ' AND ' . ($colorB + $diff) . ')' .
+      ')';
+    $searchColorHtml .= '<span style="display:inline-block;background-color: rgb('.$colorR.','.$colorG.','.$colorB.');width:8px;height:8px;margin:0 5px;"></span>';
   }
+  $page['section'] = 'palette/' . $tokens[1];
+  $page['section_title'] = '<a href="'.get_absolute_root_url().'">'.l10n('Home').'</a>'.$conf['level_separator'].'<a href="'.COLOR_PALETTE_PUBLIC.'">'.l10n('Palette Search').'</a>' . $searchColorHtml;
+  $page['title'] = l10n('Palette Search');
+
+  $query = '
+SELECT 1 as i, image_id
+  FROM '. COLOR_PALETTE_TABLE .'
+  WHERE '. (implode(' OR ', $colorPredicates)) .'
+  GROUP BY image_id
+  HAVING SUM(i) = '. count($colorPredicates) .'
+;';
+  $page['items'] = query2array($query, null, 'image_id');
 }
 
 /**
@@ -124,34 +134,22 @@ SELECT color_r, color_g, color_b
   $palette_colors = array();
   foreach ($colors as $color)
   {
-    $params = $color['r'] . ',' . $color['g'] . ',' . $color['b'];
     $palette_colors[] = array(
-      'color' => $color['hex'],
-      'url'   => make_index_url(array('section' => 'palette')) . '/' . $params
+      'hex' => $color['hex'],
+      'rgb' => $color['r'] . ',' . $color['g'] . ',' . $color['b']
       );
   }
+  $template->assign('COLOR_PALETTE_PATH', COLOR_PALETTE_PATH);
   $template->assign('palette_colors', $palette_colors);
+  $template->assign('palette_url',  make_index_url(array('section' => 'palette')) . '/');
+  $template->set_filename('palette_info_content', realpath(COLOR_PALETTE_PATH . 'template/palette_info.tpl'));
+  $template->assign_var_from_handle('INFO_PALETTE', 'palette_info_content');
   $template->set_prefilter('picture', 'color_palette_picture_prefilter');
 }
 
 function color_palette_picture_prefilter($content)
 {
   $search = '{if $display_info.author and isset($INFO_AUTHOR)}';
-  $replace = '
-<div id="color_palette" class="imageInfo">
-  <dt>{\'Palette\'|@translate}</dt>
-  <style>.color_palette_item {
-  display: block;
-  height: 18px;
-  width: 22px;
-  float: left;
-  }</style>
-  <dd>
-  {foreach from=$palette_colors item=color name=color_loop}<a href="{$color.url}"><span class="color_palette_item" style=" background-color: #{$color.color};" title="#{$color.color}"></span></a>{/foreach}
-  <span style="clear: both"/>
-  </dd>
-</div>
-<br/>
-';
+  $replace = '{$INFO_PALETTE}';
   return str_replace($search, $replace.$search, $content);
 }
