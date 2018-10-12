@@ -29,11 +29,20 @@ if (isset($_POST['submit']))
     $sample_size = $old_conf['sample_size'];
   }
 
+  $coverage = isset($_POST['coverage']) ? (intval($_POST['coverage'])) : $old_conf['coverage'];
+  print_r($coverage);
+  if (($coverage < 30) || ($coverage > 100))
+  {
+    $page['errors'][] = l10n('Sample image coverage must have a value between %d and %d', 30, 100);
+    $coverage = $old_conf['coverage'];
+  }
+
   if (empty($page['errors']))
   {
     $conf['ColorPalette'] = array(
       'colors' => $colors,
       'sample_size' => $sample_size,
+      'coverage' => $coverage,
       'generate_on_image_page' => isset($_POST['generate_on_image_page'])
       );
     if (isset($_POST['clear']))
@@ -46,6 +55,7 @@ if (isset($_POST['submit']))
 }
 
 $template->assign(array(
+  'COLOR_PALETTE_PATH' => COLOR_PALETTE_PATH,
   'COLOR_PALETTE_ADMIN' => COLOR_PALETTE_ADMIN,
   'COLOR_PALETTE_DEFAULT_COLORS' => COLOR_PALETTE_DEFAULT_COLORS,
   'COLOR_PALETTE_DEFAULT_SAMPLE_SIZE' => COLOR_PALETTE_DEFAULT_SAMPLE_SIZE,

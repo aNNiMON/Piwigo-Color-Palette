@@ -1,4 +1,5 @@
 <?php
+
 $lang['ColorPalette'] = 'Kleur Palet';
 $lang['Color Palette'] = 'Kleur Palet';
 $lang['Palette'] = 'Palet';
@@ -8,6 +9,10 @@ $lang['Number of colors in palette (default %d)'] = 'Aantal kleuren in palet (st
 $lang['Number of colors must have a value between %d and %d'] = 'Aantal kleuren moet een waarde hebben tussen %d en %d';
 $lang['Sample image size'] = 'Sample image grootte';
 $lang['Sample image size for palette generation (default %d px)'] = 'Sample image grootte voor palet generatie (standaard %d px)';
+// $lang['Sample image must have a size between %d and %d'] = 'Sample image must have a size between %d and %d';
+// $lang['Sample image coverage'] = 'Sample image coverage';
+// $lang['Sample image coverage from center (default 100% - full image)'] = 'Sample image coverage from center (default 100% - full image)';
+// $lang['Sample image coverage must have a value between %d and %d'] = 'Sample image coverage must have a value between %d and %d';
 $lang['Clear all palettes'] = 'Verwijder alle paletten';
 $lang['Clear color palette'] = 'Verwijder kleur palet';
 $lang['Generate color palette'] = 'Genereer kleur palet';

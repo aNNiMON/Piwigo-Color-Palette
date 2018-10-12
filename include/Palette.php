@@ -54,21 +54,33 @@ abstract class Palette
 
   public abstract function destroy();
 
-  public function generate($maxColors = 6, $logicalSize = 150)
+  public function generate($maxColors = 6, $logicalSize = 150, $coverage = 100)
   {
+    // Calculate new dimensions based on coverage percentage
+    $px = 0;
+    $py = 0;
+    $pw = $this->width;
+    $ph = $this->height;
+    if ($coverage < 100)
+    {
+      $pw = $coverage * $pw / 100;
+      $ph = $coverage * $ph / 100;
+      $px = $this->width / 2 - $pw / 2;
+      $py = $this->height / 2 - $ph / 2;
+    }
     // Calculate step
     $picksCount = $logicalSize * $logicalSize;
-    $step = sqrt($this->height / ($picksCount / $this->width));
+    $step = sqrt($ph / ($picksCount / $pw));
     $step = max(array(1, $step));
     // Reset number of color occurrences
     $this->palette = array_keys(self::$PALETTE_WEIGHTS);
     $this->palette = array_fill_keys($this->palette, 0);
     // Scan
-    for ($y = 0; $y < $this->height; $y += $step)
+    for ($y = 0; $y < $ph; $y += $step)
     {
-      for ($x = 0; $x < $this->width; $x += $step)
+      for ($x = 0; $x < $pw; $x += $step)
       {
-        list($r, $g, $b, $a) = $this->getColor((int)$x, (int)$y);
+        list($r, $g, $b, $a) = $this->getColor((int)($px + $x), (int)($py + $y));
         if ($a === 127)
         {
           continue;

@@ -21,7 +21,10 @@ DELETE FROM '. COLOR_PALETTE_TABLE .'
   } else {
     $paletteGen = new PaletteGD($imagePath);
   }
-  $palette = $paletteGen->generate($conf['ColorPalette']['colors'], $conf['ColorPalette']['sample_size']);
+  $palette = $paletteGen->generate(
+      $conf['ColorPalette']['colors'],
+      $conf['ColorPalette']['sample_size'],
+      $conf['ColorPalette']['coverage']);
   $paletteGen->destroy();
   $colors = array();
   $inserts = array();

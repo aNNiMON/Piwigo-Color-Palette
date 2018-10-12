@@ -6,6 +6,7 @@ class ColorPalette_maintain extends PluginMaintain
   private $default_conf = array(
     'colors' => 8,
     'sample_size' => 150,
+    'coverage' => 100,
     'generate_on_image_page' => true
     );
 

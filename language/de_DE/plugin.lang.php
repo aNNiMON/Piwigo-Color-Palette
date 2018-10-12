@@ -1,4 +1,5 @@
 <?php
+
 $lang['ColorPalette'] = 'Farbpalette';
 $lang['Color Palette'] = 'Farbpalette';
 $lang['Palette'] = 'Palette';
@@ -8,6 +9,10 @@ $lang['Number of colors in palette (default %d)'] = 'Anzahl der Farben in der Pa
 $lang['Number of colors must have a value between %d and %d'] = 'Anzahl der Farben muss einen Wert haben zwischen %d und %d';
 $lang['Sample image size'] = 'Beispielbildgröße';
 $lang['Sample image size for palette generation (default %d px)'] = 'Beispielbildgröße für die Palettengenerierung (standard %d px)';
+// $lang['Sample image must have a size between %d and %d'] = 'Sample image must have a size between %d and %d';
+// $lang['Sample image coverage'] = 'Sample image coverage';
+// $lang['Sample image coverage from center (default 100% - full image)'] = 'Sample image coverage from center (default 100% - full image)';
+// $lang['Sample image coverage must have a value between %d and %d'] = 'Sample image coverage must have a value between %d and %d';
 $lang['Clear all palettes'] = 'Alle Paletten löschen';
 $lang['Clear color palette'] = 'Klare Farbpalette';
 $lang['Generate color palette'] = 'Generieren die Farbpalette';

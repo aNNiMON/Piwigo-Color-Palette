@@ -1,0 +1,20 @@
+#colorpalette_colors,
+#colorpalette_sample_size,
+#colorpalette_coverage {
+  width:400px;
+  display:inline-block;
+  margin-right:10px;
+}
+#colorpalette_colors_handle,
+#colorpalette_sample_size_handle,
+#colorpalette_coverage_handle {
+  width: 3em;
+  height: 1.6em;
+  top: 50%;
+  margin-top: -.8em;
+  text-align: center;
+  line-height: 1.6em;
+}
+#colorpalette_coverage_handle {
+  width: 3.5em;
+}
