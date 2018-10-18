@@ -3,7 +3,7 @@ defined('COLOR_PALETTE_PATH') or die('Hacking attempt!');
 
 function color_palette_loc_end_section_init()
 {
-  global $tokens, $page, $conf;
+  global $tokens, $page, $conf, $user;
 
   if ($tokens[0] != 'palette' || (count($tokens) <= 1))
   {
@@ -56,14 +56,20 @@ function color_palette_loc_end_section_init()
   $page['section_title'] = '<a href="'.get_absolute_root_url().'">'.l10n('Home').'</a>'.$conf['level_separator'].'<a href="'.COLOR_PALETTE_PUBLIC.'">'.l10n('Palette Search').'</a>' . $searchColorHtml;
   $page['title'] = l10n('Palette Search');
 
+  $forbidden_categories = calculate_permissions($user['id'], $user['status']);
+
   $query = '
-SELECT 1 as i, image_id
-  FROM '. COLOR_PALETTE_TABLE .'
+SELECT 1 as i, pal.image_id as pal_image_id
+  FROM '. COLOR_PALETTE_TABLE .' pal
+  INNER JOIN '. IMAGES_TABLE .' img ON img.id = pal.image_id
+  INNER JOIN '. IMAGE_CATEGORY_TABLE .' cat ON img.id = cat.image_id
   WHERE '. (implode(' OR ', $colorPredicates)) .'
-  GROUP BY image_id
+    AND cat.category_id NOT IN ('. $forbidden_categories .')
+    AND img.level <= '. intval($user['level']) .'
+  GROUP BY pal.image_id
   HAVING SUM(i) = '. count($colorPredicates) .'
 ;';
-  $page['items'] = query2array($query, null, 'image_id');
+  $page['items'] = query2array($query, null, 'pal_image_id');
 }
 
 /**
