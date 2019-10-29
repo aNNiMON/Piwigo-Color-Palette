@@ -108,6 +108,17 @@ SELECT `path`
   WHERE id = ' . $imageId . '
 ;';
     list($imagePath) = query2array($query, null, 'path');
+    // check image validity by extension
+    if (!color_palette_is_image($imagePath))
+    {
+      // create palette from thumbnail
+      $imagePath = $der->src_image->rel_path;
+      if (!color_palette_is_image($imagePath))
+      {
+        return;
+      }
+    }
+
     list($status, $cols) = generate_palette($imageId, $imagePath);
     if (!$status)
     {
@@ -151,6 +162,13 @@ SELECT color_r, color_g, color_b
   $template->set_filename('palette_info_content', realpath(COLOR_PALETTE_PATH . 'template/palette_info.tpl'));
   $template->assign_var_from_handle('INFO_PALETTE', 'palette_info_content');
   $template->set_prefilter('picture', 'color_palette_picture_prefilter');
+}
+
+function color_palette_is_image($path)
+{
+  $pathParts = pathinfo($path);
+  $ext = mb_strtolower($pathParts['extension']);
+  return in_array($ext, array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'));
 }
 
 function color_palette_picture_prefilter($content)
