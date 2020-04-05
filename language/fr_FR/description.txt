@@ -1,0 +1,1 @@
+Extrait la palette de couleur des images et ajout la possibilité de rechercher par couleur.
