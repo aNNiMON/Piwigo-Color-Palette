@@ -1,0 +1,1 @@
+Udtrækker farvepaletter fra billeder og giver mulighed for at foretage farvesøgning.
