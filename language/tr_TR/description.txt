@@ -1,0 +1,1 @@
+İmajlaredan renk paletini çıkarır ve renge göre arama yeteneği ekler.
