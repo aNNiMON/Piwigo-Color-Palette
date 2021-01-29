@@ -173,7 +173,17 @@ function color_palette_is_image($path)
 
 function color_palette_picture_prefilter($content)
 {
-  $search = '{if $display_info.author and isset($INFO_AUTHOR)}';
+  $candidates = array(
+    // Default layout
+    '{if $display_info.author and isset($INFO_AUTHOR)}',
+    // Manage Properties Photos
+    '<dl id="standard" class="imageInfoTable">{strip}'
+  );
   $replace = '{$INFO_PALETTE}';
-  return str_replace($search, $replace.$search, $content);
+  foreach ($candidates as $search) {
+    if (strpos($content, $search) !== false) {
+      return str_replace($search, $replace.$search, $content);
+    }
+  }
+  return $content;
 }
