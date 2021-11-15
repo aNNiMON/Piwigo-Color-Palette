@@ -56,6 +56,16 @@ CREATE TABLE IF NOT EXISTS `' . $this->table . '` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 ;';
     pwg_query($query);
+
+    $rgbid = 'colpal_rgbid';
+    if (!$this->has_index($rgbid))
+    {
+      $query = '
+CREATE INDEX `' . $rgbid . '` ON `' . $this->table . '` (
+  color_r, color_g, color_b, image_id
+);';
+      pwg_query($query);
+    }
   }
 
   function update($old_version, $new_version, &$errors=array())
@@ -68,5 +78,22 @@ CREATE TABLE IF NOT EXISTS `' . $this->table . '` (
     conf_delete_param('ColorPalette');
 
     pwg_query('DROP TABLE `' . $this->table . '`;');
+
+    $rgbid = 'colpal_rgbid';
+    if ($this->has_index($rgbid))
+    {
+      pwg_query('DROP INDEX `' . $rgbid . '` ON `' . $this->table . '`;');
+    }
+  }
+
+  function has_index($name)
+  {
+    $query = '
+SELECT COUNT(1) AS `has_index`
+  FROM INFORMATION_SCHEMA.STATISTICS
+  WHERE `table_name` = "' . $this->table . '" AND `index_name` = "' . $name. '"
+;';
+    list($has_index) = query2array($query, null, 'has_index');
+    return $has_index;
   }
 }
