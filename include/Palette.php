@@ -54,6 +54,12 @@ abstract class Palette
 
   public abstract function destroy();
 
+  // returns array exculding all items having a value we do not want
+  public function array_remove(array $array, $value, $strict=false)
+  {
+    return array_diff_key($array, array_flip(array_keys($array, $value, $strict)));
+  }
+
   public function generate($maxColors = 6, $logicalSize = 150, $coverage = 100)
   {
     // Calculate new dimensions based on coverage percentage
@@ -90,7 +96,8 @@ abstract class Palette
       }
     }
     arsort($this->palette);
-    $palette = array_keys($this->palette);
+    // return only non-zero matches; this solves the issue of having non-existing palette colors in a single-color picture
+    $palette = array_keys($this->array_remove($this->palette, 0));
     return array_slice($palette, 0, $maxColors, true);
   }
 
