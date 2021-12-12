@@ -1,0 +1,1 @@
+Iz slik izvleče barvno paleto in doda možnost iskanja po barvah.
