@@ -1,0 +1,1 @@
+Dregur litatöflu úr myndum og bætir við möguleika á að leita eftir litum.
