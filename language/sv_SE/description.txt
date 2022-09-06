@@ -1,0 +1,1 @@
+Hämta färgpalett från bilder och lägger till möjlighet att söka efter färg.
