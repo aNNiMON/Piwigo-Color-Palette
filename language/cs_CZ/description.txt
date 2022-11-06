@@ -1,0 +1,1 @@
+Extrahuje paletu barev z obrázků a přidává možnost vyhledávání podle barvy.
