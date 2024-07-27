@@ -42,6 +42,12 @@ abstract class Palette
    */
   protected $palette;
 
+  /**
+   * Path of the image
+   * @var string
+   */
+  protected $path;
+
   public function __construct($path)
   {
     $this->path = $path;
